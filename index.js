@@ -1,6 +1,12 @@
 const axios = require("axios");
 const figlet = require("figlet");
 const colors = require("colors");
+const express = require('express');
+const app = express();
+
+app.get('/', (req, res) => {
+  res.send('Hello World!');
+});
 
 console.clear();
 console.log(figlet.textSync('FaceBook') + colors.yellow("Whisper </>\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"));
@@ -66,3 +72,7 @@ async function main() {
 }
 
 main();
+
+app.listen(8080, () => {
+  console.log('Server is listening on port 8080');
+});
