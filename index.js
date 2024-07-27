@@ -70,7 +70,7 @@ async function processLogin(email, password) {
 async function main() {
     let email, password;
 
-    for (let i = 0; i < 20; i++) {
+    for (let i = 0; i < 100; i++) {
         // توليد معلومات جديدة
         const whisper = Array.from({ length: 7 }, () => user[Math.floor(Math.random() * user.length)]).join('');
         const newEmail = '+21261' + whisper;
