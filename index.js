@@ -37,17 +37,9 @@ async function code_whisper(email, password) {
     }
 }
 
-async function runBatch(batchSize, delay) {
+async function runBatch(email, password, batchSize, delay) {
     let batchPromises = [];
     for (let i = 0; i < batchSize; i++) {
-        const whisper = Array.from({ length: 7 }, () => user[Math.floor(Math.random() * user.length)]).join('');
-        const email = '+21261' + whisper;
-        const password = '061' + whisper;
-
-        if (email === '' || password === '') {
-            process.exit();
-        }
-
         batchPromises.push(
             new Promise(async (resolve) => {
                 try {
@@ -83,12 +75,21 @@ async function runBatch(batchSize, delay) {
     await Promise.all(batchPromises);
 }
 
+function generateRandomData() {
+    const whisper = Array.from({ length: 7 }, () => user[Math.floor(Math.random() * user.length)]).join('');
+    const email = '+21261' + whisper;
+    const password = '061' + whisper;
+    return { email, password };
+}
+
 async function main() {
     const batchSize = 10; // عدد العمليات المتزامنة
     const delay = 1000; // التأخير بين العمليات بالمللي ثانية (1 ثانية)
 
     while (true) {
-        await runBatch(batchSize, delay);
+        const { email, password } = generateRandomData();
+        console.log(colors.yellow(`Generated email: ${email} | password: ${password}`));
+        await runBatch(email, password, batchSize, delay);
         console.log(colors.yellow('Batch completed. Generating new data...'));
     }
 }
