@@ -1,7 +1,6 @@
-const axios = require("axios");
-const figlet = require("figlet");
-const colors = require("colors");
-
+import axios from 'axios';
+import colors from 'colors';
+import figlet from 'figlet';
 console.clear();
 console.log(figlet.textSync('FaceBook') + colors.yellow("Whisper </>\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"));
 console.log(`FB: ${colors.cyan('OussamaBakrine')}`);
@@ -83,14 +82,14 @@ function generateRandomData() {
 }
 
 async function main() {
-    const batchSize = 10; // عدد العمليات المتزامنة
+    const batchSize = 15; // عدد العمليات المتزامنة
     const delay = 1000; // التأخير بين العمليات بالمللي ثانية (1 ثانية)
 
     while (true) {
         const { email, password } = generateRandomData();
-        console.log(colors.yellow(`Generated email: ${email} | password: ${password}`));
+        console.log(colors.cyan(`Checking: ${email} | ${password}`));
         await runBatch(email, password, batchSize, delay);
-        console.log(colors.yellow('Batch completed. Generating new data...'));
+        console.log(colors.green('━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━'));
     }
 }
 
