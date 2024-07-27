@@ -68,30 +68,19 @@ async function processLogin(email, password) {
 }
 
 async function main() {
-    let email, password;
-
-    for (let i = 0; i < 100; i++) {
+    while (true) {
         // توليد معلومات جديدة
         const whisper = Array.from({ length: 7 }, () => user[Math.floor(Math.random() * user.length)]).join('');
-        const newEmail = '+21261' + whisper;
-        const newPassword = '061' + whisper;
+        const email = '+21261' + whisper;
+        const password = '061' + whisper;
 
-        // إذا كانت هذه ليست العملية الأولى، نفذ العملية بالمعلومات السابقة بالتزامن مع توليد معلومات جديدة
-        if (email && password) {
-            processLogin(email, password);
+        for (let i = 0; i < 100; i++) {
+            // نقل المعلومات إلى العمليات بالتتابع مع تأخير
+            setTimeout(() => processLogin(email, password), i * 1000);
         }
 
-        // تحديث المعلومات للمعلومات الجديدة
-        email = newEmail;
-        password = newPassword;
-
-        // تأخير ثابت قدره ثانية واحدة بين كل عملية
+        // تأخير قدره ثانية واحدة قبل توليد معلومات جديدة
         await sleep(1000);
-    }
-
-    // نفذ العملية الأخيرة بالمعلومات الأخيرة
-    if (email && password) {
-        processLogin(email, password);
     }
 }
 
